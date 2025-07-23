@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS | Award-Winning Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollToPlugin.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --accent: #8b5cf6;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --text: #334155;
+            --text-light: #64748b;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: var(--light);
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.7);
+            border-bottom: 1px solid var(--border);
+            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            overflow: hidden;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-light);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: var(--text-light);
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--light);
+            background: var(--primary);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+        }
+
+        .cta-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Globe Container */
+        #globe-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Path Guide */
+        .path-guide {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            border-radius: 50%;
+            border: 1px dashed rgba(59, 130, 246, 0.3);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* Project Sections */
+        .project-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .project-content {
+            max-width: 600px;
+            background: rgba(15, 23, 42, 0.85);
+            padding: 3rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0.3);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .project-description {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 8rem 10%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--text-light);
+            max-width: 500px;
+            margin-top: 1rem;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .skill-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .skill-description {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Floating Elements */
+        .floating {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .floating-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: 10%;
+            right: 10%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .floating-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            bottom: 10%;
+            left: 10%;
+            animation: float 18s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(40px, -40px); }
+            50% { transform: translate(0, -80px); }
+            75% { transform: translate(-40px, -40px); }
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 10% 2rem;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+
+        .footer-col p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--card-bg);
+            color: var(--light);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: var(--light);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 0 5%;
+            }
+            
+            .project-section, .skills-section {
+                padding: 6rem 5%;
+            }
+            
+            .project-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 3D Globe Container -->
+    <div id="globe-container"></div>
+    <div class="path-guide"></div>
+
+    <!-- Floating Elements -->
+    <div class="floating floating-1"></div>
+    <div class="floating floating-2"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">NEX<span>US</span></div>
+        <div class="nav-links">
+            <a href="#projects">Work</a>
+            <a href="#skills">Skills</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Journey Through <span class="highlight">Digital Innovation</span></h1>
+            <p>Explore our global projects through an immersive 3D experience. Scroll to navigate between locations and discover our work.</p>
+            <a href="#san-francisco" class="cta-button">
+                Begin Journey
+                <i class="fas fa-arrow-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- San Francisco Project -->
+    <section id="san-francisco" class="project-section">
+        <div class="project-marker" style="top: 30%; left: 25%;"></div>
+        <div class="project-content">
+            <h2 class="project-title">San Francisco Tech Hub</h2>
+            <p class="project-description">A cutting-edge technology center designed for the future of work. Our team created an immersive digital experience that connects remote teams through augmented reality interfaces and real-time collaboration tools.</p>
+            <a href="#" class="cta-button">
+                View Project
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Tokyo Project -->
+    <section id="tokyo" class="project-section">
+        <div class="project-marker" style="top: 40%; left: 75%;"></div>
+        <div class="project-content">
+            <h2 class="project-title">Tokyo Digital Museum</h2>
+            <p class="project-description">An interactive digital museum that blends traditional Japanese art with cutting-edge projection mapping technology. Visitors experience art in a completely new dimension through our immersive installations.</p>
+            <a href="#" class="cta-button">
+                View Project
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- London Project -->
+    <section id="london" class="project-section">
+        <div class="project-marker" style="top: 35%; left: 45%;"></div>
+        <div class="project-content">
+            <h2 class="project-title">London Financial Platform</h2>
+            <p class="project-description">A revolutionary financial visualization platform that transforms complex market data into interactive 3D landscapes. Traders navigate market trends as if exploring a digital universe.</p>
+            <a href="#" class="cta-button">
+                View Project
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section" id="skills">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Technical Expertise</h2>
+                <p class="section-subtitle">We combine cutting-edge technology with innovative design principles</p>
+            </div>
+        </div>
+        <div class="skills-container">
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3 class="skill-title">3D & WebGL</h3>
+                <p class="skill-description">Creating immersive 3D experiences with Three.js, WebGL, and GLSL shaders for interactive websites and applications.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="skill-title">Creative Development</h3>
+                <p class="skill-description">Building innovative web solutions with React, Vue, and modern JavaScript frameworks for seamless user experiences.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3 class="skill-title">UI/UX Design</h3>
+                <p class="skill-description">Crafting intuitive interfaces with user-centered design principles, motion design, and interactive prototypes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>NEXUS</h3>
+                <p>Pushing the boundaries of digital experiences through innovative design and cutting-edge technology.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Navigation</h3>
+                <p><a href="#san-francisco" style="color: var(--text-light); text-decoration: none;">San Francisco Project</a></p>
+                <p><a href="#tokyo" style="color: var(--text-light); text-decoration: none;">Tokyo Project</a></p>
+                <p><a href="#london" style="color: var(--text-light); text-decoration: none;">London Project</a></p>
+                <p><a href="#skills" style="color: var(--text-light); text-decoration: none;">Our Skills</a></p>
+            </div>
+            <div class="footer-col">
+                <h3>Services</h3>
+                <p>Web Development</p>
+                <p>3D Visualization</p>
+                <p>UI/UX Design</p>
+                <p>Creative Direction</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 NEXUS Design Studio. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Three.js scene
+        let scene, camera, renderer, globe, cloud, stars;
+        let markers = [];
+        let currentTarget = null;
+        let scrollProgress = 0;
+        let isScrolling = false;
+        let lastScrollTime = 0;
+        
+        // Project positions (relative to globe)
+        const projects = [
+            { id: "san-francisco", lat: 37.7749, lon: -122.4194, zoom: 5 },
+            { id: "tokyo", lat: 35.6895, lon: 139.6917, zoom: 6 },
+            { id: "london", lat: 51.5074, lon: -0.1278, zoom: 7 }
+        ];
+        
+        function init() {
+            // Create scene
+            scene = new THREE.Scene();
+            
+            // Create camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.getElementById('globe-container').appendChild(renderer.domElement);
+            
+            // Add ambient light
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            // Add directional light
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 3, 5);
+            scene.add(directionalLight);
+            
+            // Create earth geometry
+            const earthGeometry = new THREE.SphereGeometry(10, 64, 64);
+            
+            // Load textures
+            const textureLoader = new THREE.TextureLoader();
+            const earthTexture = textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+            const earthBump = textureLoader.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg');
+            const earthSpec = textureLoader.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg');
+            
+            // Create earth material
+            const earthMaterial = new THREE.MeshPhongMaterial({
+                map: earthTexture,
+                bumpMap: earthBump,
+                bumpScale: 0.05,
+                specularMap: earthSpec,
+                specular: new THREE.Color(0x333333),
+                shininess: 5
+            });
+            
+            // Create earth mesh
+            globe = new THREE.Mesh(earthGeometry, earthMaterial);
+            scene.add(globe);
+            
+            // Create cloud geometry
+            const cloudGeometry = new THREE.SphereGeometry(10.1, 64, 64);
+            const cloudMaterial = new THREE.MeshPhongMaterial({
+                map: textureLoader.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png'),
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            // Create cloud mesh
+            cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
+            scene.add(cloud);
+            
+            // Add stars
+            const starGeometry = new THREE.BufferGeometry();
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 0.2,
+                sizeAttenuation: true
+            });
+            
+            const starVertices = [];
+            for (let i = 0; i < 10000; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                starVertices.push(x, y, z);
+            }
+            
+            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+            stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+            
+            // Create project markers
+            projects.forEach(project => {
+                const position = latLongToVector3(project.lat, project.lon, 10.5);
+                
+                const markerGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+                const markerMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0x3b82f6,
+                    emissive: 0x2563eb,
+                    emissiveIntensity: 0.5
+                });
+                
+                const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+                marker.position.copy(position);
+                
+                // Add pulsing effect
+                const pulseGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+                const pulseMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0x3b82f6,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                
+                const pulse = new THREE.Mesh(pulseGeometry, pulseMaterial);
+                marker.add(pulse);
+                
+                scene.add(marker);
+                markers.push({ marker, pulse, project });
+                
+                // Add light to marker
+                const pointLight = new THREE.PointLight(0x3b82f6, 1, 5);
+                marker.add(pointLight);
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+            
+            // Start animation loop
+            animate();
+            
+            // Initialize scroll animations
+            initScrollAnimations();
+        }
+        
+        function latLongToVector3(lat, lon, radius) {
+            const phi = (90 - lat) * Math.PI / 180;
+            const theta = (lon + 180) * Math.PI / 180;
+            
+            return new THREE.Vector3(
+                -radius * Math.sin(phi) * Math.cos(theta),
+                radius * Math.cos(phi),
+                radius * Math.sin(phi) * Math.sin(theta)
+            );
+        }
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate earth and clouds
+            globe.rotation.y += 0.001;
+            cloud.rotation.y += 0.0015;
+            
+            // Animate marker pulses
+            const time = Date.now() * 0.001;
+            markers.forEach(marker => {
+                marker.pulse.scale.set(1 + Math.sin(time) * 0.3, 1 + Math.sin(time) * 0.3, 1 + Math.sin(time) * 0.3);
+            });
+            
+            // Animate camera based on scroll
+            if (currentTarget) {
+                const targetPosition = currentTarget.position.clone();
+                const cameraTarget = new THREE.Vector3(0, 0, 0);
+                
+                // Move camera closer to target
+                targetPosition.multiplyScalar(1.5);
+                camera.position.lerp(targetPosition, 0.05);
+                
+                // Look at target
+                camera.lookAt(cameraTarget);
+                
+                // Rotate stars slightly
+                stars.rotation.y += 0.0001;
+            }
+            
+            renderer.render(scene, camera);
+        }
+        
+        function initScrollAnimations() {
+            // Hero animations
+            gsap.to('.hero h1', {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: 'power3.out',
+                delay: 0.2
+            });
+            
+            gsap.to('.hero p', {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: 'power3.out',
+                delay: 0.4
+            });
+            
+            gsap.to('.cta-button', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+                delay: 0.8
+            });
+            
+            // Project section animations
+            projects.forEach(project => {
+                const section = document.getElementById(project.id);
+                
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: "top center",
+                    end: "bottom center",
+                    onEnter: () => {
+                        currentTarget = markers.find(m => m.project.id === project.id).marker;
+                        gsap.to('.path-guide', { opacity: 1, duration: 1 });
+                        
+                        // Animate section in
+                        gsap.to(section, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 1,
+                            ease: 'power3.out'
+                        });
+                    },
+                    onLeave: () => {
+                        gsap.to('.path-guide', { opacity: 0, duration: 0.5 });
+                    },
+                    onEnterBack: () => {
+                        currentTarget = markers.find(m => m.project.id === project.id).marker;
+                        gsap.to('.path-guide', { opacity: 1, duration: 1 });
+                    }
+                });
+            });
+            
+            // Skill card animations
+            gsap.utils.toArray('.skill-card').forEach((card, i) => {
+                ScrollTrigger.create({
+                    trigger: card,
+                    start: "top 90%",
+                    end: "bottom center",
+                    onEnter: () => {
+                        gsap.to(card, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: 'power3.out',
+                            delay: i * 0.1
+                        });
+                    }
+                });
+            });
+            
+            // Navigation hide/show on scroll
+            let lastScrollPosition = window.scrollY;
+            
+            window.addEventListener('scroll', () => {
+                const currentScrollPosition = window.scrollY;
+                
+                if (currentScrollPosition > lastScrollPosition && currentScrollPosition > 100) {
+                    // Scrolling down
+                    gsap.to('nav', { y: -100, duration: 0.3 });
+                } else {
+                    // Scrolling up
+                    gsap.to('nav', { y: 0, duration: 0.3 });
+                }
+                
+                lastScrollPosition = currentScrollPosition;
+            });
+        }
+        
+        // Initialize everything when the page loads
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
