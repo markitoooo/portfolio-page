@@ -3,40 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS | Award-Winning Portfolio</title>
+    <title>Markito | Premium Design Studio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-light: #3b82f6;
-            --primary-dark: #1d4ed8;
-            --secondary: #0f172a;
-            --accent: #8b5cf6;
-            --light: #f8fafc;
-            --dark: #0f172a;
-            --text: #334155;
-            --text-light: #64748b;
-            --card-bg: rgba(255, 255, 255, 0.08);
-            --border: rgba(255, 255, 255, 0.1);
+            --primary: #0a1128;
+            --primary-light: #1c2b5a;
+            --accent: #0071e3;
+            --accent-light: #2997ff;
+            --light: #f5f5f7;
+            --dark: #000;
+            --text: #86868b;
+            --text-light: #a1a1a6;
+            --card-bg: rgba(245, 245, 247, 0.08);
+            --border: rgba(245, 245, 247, 0.1);
+            --transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
+            background: linear-gradient(135deg, #0a1128, #1c2b5a);
             color: var(--light);
             overflow-x: hidden;
             min-height: 100vh;
-            background-attachment: fixed;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            perspective: 1000px;
         }
 
         /* Custom scrollbar */
@@ -45,11 +47,11 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(10, 17, 40, 0.8);
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--primary);
+            background: var(--accent);
             border-radius: 4px;
         }
 
@@ -61,43 +63,44 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 5%;
+            padding: 1.8rem 5%;
             z-index: 100;
             backdrop-filter: blur(12px);
-            background: rgba(15, 23, 42, 0.7);
-            border-bottom: 1px solid var(--border);
-            transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: rgba(10, 17, 40, 0.7);
+            transition: var(--transition);
+            transform: translateY(0);
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--light);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: -1px;
+            transition: transform 0.4s ease;
         }
 
-        .logo span {
-            color: var(--primary);
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 3rem;
         }
 
         .nav-links a {
-            color: var(--light);
+            color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
             position: relative;
             padding: 0.5rem 0;
             overflow: hidden;
             transition: color 0.3s ease;
+            font-size: 1.1rem;
         }
 
         .nav-links a:hover {
-            color: var(--primary-light);
+            color: var(--accent-light);
         }
 
         .nav-links a:after {
@@ -107,7 +110,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary);
+            background: var(--accent);
             transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
@@ -131,21 +134,26 @@
         .hero-content {
             max-width: 900px;
             z-index: 10;
+            position: relative;
+            transform: translateZ(50px);
         }
 
         .hero h1 {
-            font-size: 5rem;
-            font-weight: 800;
+            font-size: 4.5rem;
+            font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1.5rem;
             opacity: 0;
             transform: translateY(50px);
+            letter-spacing: -1.5px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .hero h1 .highlight {
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--accent-light);
+            display: block;
+            font-size: 5.5rem;
+            margin-top: 0.5rem;
         }
 
         .hero p {
@@ -155,32 +163,35 @@
             color: var(--text-light);
             opacity: 0;
             transform: translateY(50px);
+            font-weight: 400;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
             gap: 0.8rem;
-            padding: 1.2rem 2.5rem;
+            padding: 1.2rem 3.5rem;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 500;
             text-decoration: none;
             color: var(--light);
-            background: var(--primary);
-            border-radius: 8px;
+            background: var(--accent);
+            border-radius: 50px;
             position: relative;
             overflow: hidden;
             z-index: 1;
             opacity: 0;
             transform: translateY(50px);
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(41, 151, 255, 0.2);
         }
 
         .cta-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.4);
+            background: var(--accent-light);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(41, 151, 255, 0.3);
         }
 
         .cta-button i {
@@ -191,31 +202,15 @@
             transform: translateX(5px);
         }
 
-        /* Globe Container */
-        #globe-container {
+        /* 3D Building Container */
+        #building-container {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100vh;
             z-index: -1;
             pointer-events: none;
-        }
-
-        /* Path Guide */
-        .path-guide {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%;
-            height: 120%;
-            border-radius: 50%;
-            border: 1px dashed rgba(59, 130, 246, 0.3);
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0;
         }
 
         /* Project Sections */
@@ -232,35 +227,89 @@
 
         .project-content {
             max-width: 600px;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(10, 17, 40, 0.85);
             padding: 3rem;
-            border-radius: 16px;
-            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.4s ease;
         }
 
-        .project-marker {
+        .project-content:hover {
+            transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+        }
+
+        .project-content:before {
+            content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--primary);
-            box-shadow: 0 0 0 10px rgba(59, 130, 246, 0.3);
-            z-index: 1;
-            pointer-events: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(41, 151, 255, 0.05), transparent);
+            z-index: -1;
         }
 
         .project-title {
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            color: var(--light);
+            color: var(--accent-light);
+            text-shadow: 0 5px 15px rgba(41, 151, 255, 0.2);
         }
 
         .project-description {
             color: var(--text-light);
             line-height: 1.7;
             margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .project-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-item h4 {
+            font-size: 0.9rem;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .detail-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Interactive Elements */
+        .interactive-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(41, 151, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            z-index: 10;
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(41, 151, 255, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(41, 151, 255, 0); }
         }
 
         /* Skills Section */
@@ -279,16 +328,29 @@
 
         .section-title {
             font-size: 3rem;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
             font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
         }
 
         .section-subtitle {
             color: var(--text-light);
             max-width: 500px;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
+            font-weight: 400;
+            font-size: 1.2rem;
         }
 
         .skills-container {
@@ -300,71 +362,57 @@
         }
 
         .skill-card {
-            background: var(--card-bg);
+            background: rgba(10, 17, 40, 0.7);
             padding: 2.5rem;
-            border-radius: 16px;
+            border-radius: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid var(--border);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transform: translateY(50px);
             opacity: 0;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+        }
+
+        .skill-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(41, 151, 255, 0.05), transparent);
+            z-index: -1;
         }
 
         .skill-icon {
             font-size: 3rem;
             margin-bottom: 1.5rem;
-            color: var(--primary);
+            color: var(--accent);
         }
 
         .skill-title {
             font-size: 1.5rem;
             margin-bottom: 1rem;
             color: var(--light);
+            font-weight: 600;
         }
 
         .skill-description {
             color: var(--text-light);
             line-height: 1.6;
-        }
-
-        /* Floating Elements */
-        .floating {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.1;
-            z-index: -1;
-        }
-
-        .floating-1 {
-            width: 400px;
-            height: 400px;
-            background: var(--primary);
-            top: 10%;
-            right: 10%;
-            animation: float 15s infinite ease-in-out;
-        }
-
-        .floating-2 {
-            width: 300px;
-            height: 300px;
-            background: var(--accent);
-            bottom: 10%;
-            left: 10%;
-            animation: float 18s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(40px, -40px); }
-            50% { transform: translate(0, -80px); }
-            75% { transform: translate(-40px, -40px); }
+            font-weight: 400;
         }
 
         /* Footer */
         footer {
-            padding: 4rem 10% 2rem;
-            border-top: 1px solid var(--border);
+            padding: 6rem 10% 3rem;
             position: relative;
             z-index: 2;
         }
@@ -379,13 +427,27 @@
         .footer-col h3 {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
-            color: var(--light);
+            color: var(--accent-light);
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent);
         }
 
         .footer-col p {
             color: var(--text-light);
             line-height: 1.7;
             margin-bottom: 1.5rem;
+            font-weight: 400;
         }
 
         .social-links {
@@ -400,26 +462,29 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: var(--card-bg);
+            background: rgba(10, 17, 40, 0.7);
             color: var(--light);
             font-size: 1.2rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
         }
 
         .social-link:hover {
-            background: var(--primary);
+            background: var(--accent);
             color: var(--light);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+            transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 10px 20px rgba(41, 151, 255, 0.3);
         }
 
         .footer-bottom {
-            padding-top: 2rem;
+            padding-top: 3rem;
             border-top: 1px solid var(--border);
             text-align: center;
             color: var(--text-light);
             font-size: 0.9rem;
+            letter-spacing: 0.5px;
         }
 
         /* Animations */
@@ -428,10 +493,81 @@
             transform: translateY(0) !important;
         }
 
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
+
+        .loading-logo {
+            font-size: 4rem;
+            color: var(--accent-light);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            text-shadow: 0 10px 20px rgba(41, 151, 255, 0.3);
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 1px;
+        }
+
+        .progress {
+            position: absolute;
+            height: 100%;
+            width: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        /* Audio Controls */
+        .audio-control {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(10, 17, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .audio-control:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+        }
+
         /* Responsive Design */
         @media (max-width: 992px) {
             .hero h1 {
                 font-size: 3.5rem;
+            }
+            
+            .hero h1 .highlight {
+                font-size: 4rem;
             }
             
             .hero p {
@@ -439,7 +575,7 @@
             }
             
             .section-title {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
         }
 
@@ -459,47 +595,90 @@
             .project-content {
                 padding: 2rem;
             }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero h1 .highlight {
+                font-size: 3.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 3D Globe Container -->
-    <div id="globe-container"></div>
-    <div class="path-guide"></div>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">Markito</div>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
 
-    <!-- Floating Elements -->
-    <div class="floating floating-1"></div>
-    <div class="floating floating-2"></div>
+    <!-- 3D Building Container -->
+    <div id="building-container"></div>
+
+    <!-- Audio Controls -->
+    <div class="audio-control">
+        <i class="fas fa-volume-up"></i>
+    </div>
+
+    <!-- Interactive Elements -->
+    <div class="interactive-element" style="top: 30%; left: 15%;">
+        <i class="fas fa-expand"></i>
+    </div>
+    <div class="interactive-element" style="top: 70%; left: 85%;">
+        <i class="fas fa-cube"></i>
+    </div>
 
     <!-- Navigation -->
     <nav>
-        <div class="logo">NEX<span>US</span></div>
+        <div class="logo">Markito</div>
         <div class="nav-links">
-            <a href="#projects">Work</a>
-            <a href="#skills">Skills</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            <a href="#penthouse">Penthouse</a>
+            <a href="#creative">Creative</a>
+            <a href="#tech">Tech</a>
+            <a href="#skills">Expertise</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Journey Through <span class="highlight">Digital Innovation</span></h1>
-            <p>Explore our global projects through an immersive 3D experience. Scroll to navigate between locations and discover our work.</p>
-            <a href="#san-francisco" class="cta-button">
-                Begin Journey
+            <h1>Design Elevated <span class="highlight">To New Heights</span></h1>
+            <p>Welcome to Markito Studio, where premium design meets innovation. Experience our work through an immersive journey in our Miami seafront tower.</p>
+            <a href="#penthouse" class="cta-button">
+                Explore Projects
                 <i class="fas fa-arrow-down"></i>
             </a>
         </div>
     </section>
 
-    <!-- San Francisco Project -->
-    <section id="san-francisco" class="project-section">
-        <div class="project-marker" style="top: 30%; left: 25%;"></div>
+    <!-- Penthouse Project -->
+    <section id="penthouse" class="project-section">
         <div class="project-content">
-            <h2 class="project-title">San Francisco Tech Hub</h2>
-            <p class="project-description">A cutting-edge technology center designed for the future of work. Our team created an immersive digital experience that connects remote teams through augmented reality interfaces and real-time collaboration tools.</p>
+            <h2 class="project-title">Oceanview Penthouse</h2>
+            <p class="project-description">A luxury residential experience with panoramic ocean views. Our design harmonizes modern aesthetics with natural elements, creating a serene living space that redefines coastal luxury.</p>
+            
+            <div class="project-details">
+                <div class="detail-item">
+                    <h4>Client</h4>
+                    <p>Miami Elite Properties</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Services</h4>
+                    <p>Interior Design, Architecture</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Year</h4>
+                    <p>2023</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Location</h4>
+                    <p>Miami, FL</p>
+                </div>
+            </div>
+            
             <a href="#" class="cta-button">
                 View Project
                 <i class="fas fa-arrow-right"></i>
@@ -507,12 +686,31 @@
         </div>
     </section>
 
-    <!-- Tokyo Project -->
-    <section id="tokyo" class="project-section">
-        <div class="project-marker" style="top: 40%; left: 75%;"></div>
+    <!-- Creative Studio Project -->
+    <section id="creative" class="project-section">
         <div class="project-content">
-            <h2 class="project-title">Tokyo Digital Museum</h2>
-            <p class="project-description">An interactive digital museum that blends traditional Japanese art with cutting-edge projection mapping technology. Visitors experience art in a completely new dimension through our immersive installations.</p>
+            <h2 class="project-title">Creative Studio</h2>
+            <p class="project-description">An innovative workspace designed to inspire creativity and collaboration. Featuring modular work areas, immersive technology zones, and breathtaking ocean views to stimulate innovation.</p>
+            
+            <div class="project-details">
+                <div class="detail-item">
+                    <h4>Client</h4>
+                    <p>Innovate Collective</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Services</h4>
+                    <p>Space Design, Branding</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Year</h4>
+                    <p>2022</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Location</h4>
+                    <p>Miami, FL</p>
+                </div>
+            </div>
+            
             <a href="#" class="cta-button">
                 View Project
                 <i class="fas fa-arrow-right"></i>
@@ -520,12 +718,31 @@
         </div>
     </section>
 
-    <!-- London Project -->
-    <section id="london" class="project-section">
-        <div class="project-marker" style="top: 35%; left: 45%;"></div>
+    <!-- Tech Hub Project -->
+    <section id="tech" class="project-section">
         <div class="project-content">
-            <h2 class="project-title">London Financial Platform</h2>
-            <p class="project-description">A revolutionary financial visualization platform that transforms complex market data into interactive 3D landscapes. Traders navigate market trends as if exploring a digital universe.</p>
+            <h2 class="project-title">Technology Hub</h2>
+            <p class="project-description">A cutting-edge technology center featuring interactive displays, VR collaboration spaces, and seamless integration of digital and physical environments for next-gen work experiences.</p>
+            
+            <div class="project-details">
+                <div class="detail-item">
+                    <h4>Client</h4>
+                    <p>NexTech Innovations</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Services</h4>
+                    <p>Tech Integration, UX Design</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Year</h4>
+                    <p>2023</p>
+                </div>
+                <div class="detail-item">
+                    <h4>Location</h4>
+                    <p>Miami, FL</p>
+                </div>
+            </div>
+            
             <a href="#" class="cta-button">
                 View Project
                 <i class="fas fa-arrow-right"></i>
@@ -537,31 +754,31 @@
     <section class="skills-section" id="skills">
         <div class="section-header">
             <div>
-                <h2 class="section-title">Technical Expertise</h2>
-                <p class="section-subtitle">We combine cutting-edge technology with innovative design principles</p>
+                <h2 class="section-title">Design Expertise</h2>
+                <p class="section-subtitle">Specialized skills that transform visionary concepts into premium digital and physical experiences</p>
             </div>
         </div>
         <div class="skills-container">
             <div class="skill-card">
                 <div class="skill-icon">
-                    <i class="fas fa-globe"></i>
+                    <i class="fas fa-pencil-ruler"></i>
                 </div>
-                <h3 class="skill-title">3D & WebGL</h3>
-                <p class="skill-description">Creating immersive 3D experiences with Three.js, WebGL, and GLSL shaders for interactive websites and applications.</p>
+                <h3 class="skill-title">Architectural Design</h3>
+                <p class="skill-description">Creating spaces that harmonize form, function, and aesthetics to deliver transformative environments that elevate human experiences.</p>
             </div>
             <div class="skill-card">
                 <div class="skill-icon">
-                    <i class="fas fa-code"></i>
+                    <i class="fas fa-vr-cardboard"></i>
                 </div>
-                <h3 class="skill-title">Creative Development</h3>
-                <p class="skill-description">Building innovative web solutions with React, Vue, and modern JavaScript frameworks for seamless user experiences.</p>
+                <h3 class="skill-title">Immersive Experiences</h3>
+                <p class="skill-description">Designing interactive environments that blend physical and digital elements to create memorable, engaging experiences.</p>
             </div>
             <div class="skill-card">
                 <div class="skill-icon">
-                    <i class="fas fa-paint-brush"></i>
+                    <i class="fas fa-palette"></i>
                 </div>
-                <h3 class="skill-title">UI/UX Design</h3>
-                <p class="skill-description">Crafting intuitive interfaces with user-centered design principles, motion design, and interactive prototypes.</p>
+                <h3 class="skill-title">Brand Identity</h3>
+                <p class="skill-description">Crafting distinctive visual identities that communicate brand values and resonate with target audiences across all touchpoints.</p>
             </div>
         </div>
     </section>
@@ -570,183 +787,315 @@
     <footer>
         <div class="footer-content">
             <div class="footer-col">
-                <h3>NEXUS</h3>
-                <p>Pushing the boundaries of digital experiences through innovative design and cutting-edge technology.</p>
+                <h3>Markito Studio</h3>
+                <p>Elevating design through innovative solutions and premium experiences that stand the test of time.</p>
                 <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             <div class="footer-col">
-                <h3>Navigation</h3>
-                <p><a href="#san-francisco" style="color: var(--text-light); text-decoration: none;">San Francisco Project</a></p>
-                <p><a href="#tokyo" style="color: var(--text-light); text-decoration: none;">Tokyo Project</a></p>
-                <p><a href="#london" style="color: var(--text-light); text-decoration: none;">London Project</a></p>
-                <p><a href="#skills" style="color: var(--text-light); text-decoration: none;">Our Skills</a></p>
+                <h3>Projects</h3>
+                <p><a href="#penthouse" style="color: var(--text-light); text-decoration: none;">Oceanview Penthouse</a></p>
+                <p><a href="#creative" style="color: var(--text-light); text-decoration: none;">Creative Studio</a></p>
+                <p><a href="#tech" style="color: var(--text-light); text-decoration: none;">Technology Hub</a></p>
             </div>
             <div class="footer-col">
-                <h3>Services</h3>
-                <p>Web Development</p>
-                <p>3D Visualization</p>
-                <p>UI/UX Design</p>
-                <p>Creative Direction</p>
+                <h3>Contact</h3>
+                <p>Miami Design District</p>
+                <p>contact@markito.design</p>
+                <p>+1 (305) 555-0132</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2023 NEXUS Design Studio. All Rights Reserved.</p>
+            <p>&copy; 2023 Markito Design Studio. All Rights Reserved. | Crafted with Excellence</p>
         </div>
     </footer>
 
     <script>
         // Initialize Three.js scene
-        let scene, camera, renderer, globe, cloud, stars;
-        let markers = [];
-        let currentTarget = null;
-        let scrollProgress = 0;
-        let isScrolling = false;
-        let lastScrollTime = 0;
+        let scene, camera, renderer, building, ocean;
+        let currentFloor = 0;
+        let mouseX = 0, mouseY = 0;
+        let windowHalfX = window.innerWidth / 2;
+        let windowHalfY = window.innerHeight / 2;
+        let soundEnabled = true;
         
-        // Project positions (relative to globe)
-        const projects = [
-            { id: "san-francisco", lat: 37.7749, lon: -122.4194, zoom: 5 },
-            { id: "tokyo", lat: 35.6895, lon: 139.6917, zoom: 6 },
-            { id: "london", lat: 51.5074, lon: -0.1278, zoom: 7 }
+        // Audio elements
+        const oceanSound = new Howl({
+            src: ['https://assets.mixkit.co/sfx/preview/mixkit-ocean-waves-464.mp3'],
+            loop: true,
+            volume: 0.3
+        });
+        
+        const hoverSound = new Howl({
+            src: ['https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3'],
+            volume: 0.2
+        });
+        
+        const clickSound = new Howl({
+            src: ['https://assets.mixkit.co/sfx/preview/mixkit-mouse-click-close-1113.mp3'],
+            volume: 0.3
+        });
+        
+        // Floor positions (y-values)
+        const floors = [
+            { id: "penthouse", y: 50, zoom: 1.5, cameraPos: { x: -30, y: 70, z: 80 } },
+            { id: "creative", y: 30, zoom: 1.3, cameraPos: { x: -20, y: 40, z: 60 } },
+            { id: "tech", y: 10, zoom: 1.1, cameraPos: { x: 0, y: 20, z: 40 } }
         ];
         
+        // Update loading progress
+        function updateProgress(percent) {
+            const progressBar = document.querySelector('.progress');
+            progressBar.style.width = `${percent}%`;
+        }
+        
+        // Hide loading screen
+        function hideLoadingScreen() {
+            const loadingScreen = document.querySelector('.loading-screen');
+            gsap.to(loadingScreen, {
+                opacity: 0,
+                duration: 1,
+                ease: 'power2.out',
+                onComplete: () => {
+                    loadingScreen.style.display = 'none';
+                    oceanSound.play();
+                }
+            });
+        }
+        
+        // Create building with high-quality textures
+        function createBuilding() {
+            const buildingGroup = new THREE.Group();
+            
+            // Load high-quality textures (using placeholder URLs - replace with actual PBR textures)
+            const textureLoader = new THREE.TextureLoader();
+            const concreteTexture = textureLoader.load('https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            const glassTexture = textureLoader.load('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            const metalTexture = textureLoader.load('https://images.unsplash.com/photo-1535139262971-c51845709a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            
+            // Main tower with concrete texture
+            const towerGeometry = new THREE.BoxGeometry(20, 60, 20);
+            const towerMaterial = new THREE.MeshPhongMaterial({ 
+                map: concreteTexture,
+                shininess: 30,
+                transparent: true,
+                opacity: 0.95
+            });
+            const tower = new THREE.Mesh(towerGeometry, towerMaterial);
+            buildingGroup.add(tower);
+            
+            // Penthouse (top floor) with glass texture
+            const penthouseGeometry = new THREE.BoxGeometry(25, 5, 25);
+            const penthouseMaterial = new THREE.MeshPhongMaterial({ 
+                map: glassTexture,
+                shininess: 80,
+                transparent: true,
+                opacity: 0.7
+            });
+            const penthouse = new THREE.Mesh(penthouseGeometry, penthouseMaterial);
+            penthouse.position.y = 32.5;
+            buildingGroup.add(penthouse);
+            
+            // Balconies with metal texture
+            for (let i = 0; i < 5; i++) {
+                const balconyGeometry = new THREE.BoxGeometry(22, 0.5, 5);
+                const balconyMaterial = new THREE.MeshPhongMaterial({ 
+                    map: metalTexture,
+                    shininess: 50
+                });
+                const balcony = new THREE.Mesh(balconyGeometry, balconyMaterial);
+                balcony.position.y = 15 + (i * 10);
+                balcony.position.z = 12.5;
+                buildingGroup.add(balcony);
+            }
+            
+            // Windows with interior lighting
+            for (let i = 0; i < 12; i++) {
+                for (let j = 0; j < 3; j++) {
+                    const windowGeometry = new THREE.BoxGeometry(2, 3, 0.2);
+                    const windowMaterial = new THREE.MeshPhongMaterial({ 
+                        color: 0x2997ff,
+                        emissive: 0x0071e3,
+                        emissiveIntensity: 0.5,
+                        transparent: true,
+                        opacity: 0.7
+                    });
+                    const window = new THREE.Mesh(windowGeometry, windowMaterial);
+                    window.position.x = j === 0 ? -7 : j === 1 ? 0 : 7;
+                    window.position.y = -25 + (i * 4.5);
+                    buildingGroup.add(window);
+                    
+                    // Add point lights to simulate interior lighting
+                    if (i % 2 === 0) {
+                        const light = new THREE.PointLight(0x2997ff, 1, 5);
+                        light.position.set(window.position.x, window.position.y, window.position.z - 1);
+                        buildingGroup.add(light);
+                    }
+                }
+            }
+            
+            return buildingGroup;
+        }
+        
+        // Create ocean
+        function createOcean() {
+            const oceanGeometry = new THREE.PlaneGeometry(500, 500, 50, 50);
+            const oceanMaterial = new THREE.MeshPhongMaterial({
+                color: 0x0077be,
+                emissive: 0x005599,
+                emissiveIntensity: 0.2,
+                shininess: 80,
+                wireframe: false,
+                transparent: true,
+                opacity: 0.9
+            });
+            
+            const ocean = new THREE.Mesh(oceanGeometry, oceanMaterial);
+            ocean.rotation.x = -Math.PI / 2;
+            ocean.position.y = -35;
+            
+            return ocean;
+        }
+        
+        // Initialize the scene
         function init() {
             // Create scene
             scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a1128);
+            scene.fog = new THREE.Fog(0x0a1128, 100, 300);
             
             // Create camera
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 30;
+            camera.position.set(0, 30, 50);
             
             // Create renderer
-            renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            document.getElementById('globe-container').appendChild(renderer.domElement);
+            document.getElementById('building-container').appendChild(renderer.domElement);
             
             // Add ambient light
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
             scene.add(ambientLight);
             
-            // Add directional light
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 3, 5);
-            scene.add(directionalLight);
+            // Add directional light (sun)
+            const sun = new THREE.DirectionalLight(0xffffff, 1);
+            sun.position.set(50, 100, 50);
+            scene.add(sun);
             
-            // Create earth geometry
-            const earthGeometry = new THREE.SphereGeometry(10, 64, 64);
+            // Create building
+            building = createBuilding();
+            scene.add(building);
             
-            // Load textures
-            const textureLoader = new THREE.TextureLoader();
-            const earthTexture = textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
-            const earthBump = textureLoader.load('https://threejs.org/examples/textures/planets/earth_normal_2048.jpg');
-            const earthSpec = textureLoader.load('https://threejs.org/examples/textures/planets/earth_specular_2048.jpg');
+            // Create ocean
+            ocean = createOcean();
+            scene.add(ocean);
             
-            // Create earth material
-            const earthMaterial = new THREE.MeshPhongMaterial({
-                map: earthTexture,
-                bumpMap: earthBump,
-                bumpScale: 0.05,
-                specularMap: earthSpec,
-                specular: new THREE.Color(0x333333),
-                shininess: 5
-            });
-            
-            // Create earth mesh
-            globe = new THREE.Mesh(earthGeometry, earthMaterial);
-            scene.add(globe);
-            
-            // Create cloud geometry
-            const cloudGeometry = new THREE.SphereGeometry(10.1, 64, 64);
-            const cloudMaterial = new THREE.MeshPhongMaterial({
-                map: textureLoader.load('https://threejs.org/examples/textures/planets/earth_clouds_1024.png'),
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            // Create cloud mesh
-            cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
-            scene.add(cloud);
-            
-            // Add stars
-            const starGeometry = new THREE.BufferGeometry();
-            const starMaterial = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 0.2,
-                sizeAttenuation: true
-            });
-            
-            const starVertices = [];
-            for (let i = 0; i < 10000; i++) {
-                const x = (Math.random() - 0.5) * 2000;
-                const y = (Math.random() - 0.5) * 2000;
-                const z = (Math.random() - 0.5) * 2000;
-                starVertices.push(x, y, z);
+            // Add palm trees
+            for (let i = 0; i < 10; i++) {
+                const trunkGeometry = new THREE.CylinderGeometry(0.5, 0.7, 8, 8);
+                const trunkMaterial = new THREE.MeshPhongMaterial({ color: 0x8b5a2b });
+                const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+                
+                const leavesGeometry = new THREE.SphereGeometry(4, 8, 8);
+                const leavesMaterial = new THREE.MeshPhongMaterial({ color: 0x3cb371 });
+                const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+                leaves.position.y = 5;
+                
+                const palm = new THREE.Group();
+                palm.add(trunk);
+                palm.add(leaves);
+                
+                palm.position.x = (Math.random() - 0.5) * 150;
+                palm.position.z = (Math.random() - 0.5) * 150;
+                palm.position.y = -35;
+                
+                scene.add(palm);
             }
-            
-            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-            stars = new THREE.Points(starGeometry, starMaterial);
-            scene.add(stars);
-            
-            // Create project markers
-            projects.forEach(project => {
-                const position = latLongToVector3(project.lat, project.lon, 10.5);
-                
-                const markerGeometry = new THREE.SphereGeometry(0.3, 16, 16);
-                const markerMaterial = new THREE.MeshBasicMaterial({ 
-                    color: 0x3b82f6,
-                    emissive: 0x2563eb,
-                    emissiveIntensity: 0.5
-                });
-                
-                const marker = new THREE.Mesh(markerGeometry, markerMaterial);
-                marker.position.copy(position);
-                
-                // Add pulsing effect
-                const pulseGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-                const pulseMaterial = new THREE.MeshBasicMaterial({ 
-                    color: 0x3b82f6,
-                    transparent: true,
-                    opacity: 0.5
-                });
-                
-                const pulse = new THREE.Mesh(pulseGeometry, pulseMaterial);
-                marker.add(pulse);
-                
-                scene.add(marker);
-                markers.push({ marker, pulse, project });
-                
-                // Add light to marker
-                const pointLight = new THREE.PointLight(0x3b82f6, 1, 5);
-                marker.add(pointLight);
-            });
             
             // Handle window resize
             window.addEventListener('resize', onWindowResize);
+            
+            // Mouse move events for interactivity
+            document.addEventListener('mousemove', onMouseMove);
+            
+            // Interactive element events
+            document.querySelectorAll('.interactive-element').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    if (soundEnabled) hoverSound.play();
+                    gsap.to(el, { 
+                        scale: 1.2,
+                        backgroundColor: 'rgba(41, 151, 255, 0.3)',
+                        duration: 0.3
+                    });
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(el, { 
+                        scale: 1,
+                        backgroundColor: 'rgba(41, 151, 255, 0.1)',
+                        duration: 0.3
+                    });
+                });
+                
+                el.addEventListener('click', () => {
+                    if (soundEnabled) clickSound.play();
+                    // Add interaction effects
+                });
+            });
+            
+            // Audio control
+            document.querySelector('.audio-control').addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                const icon = document.querySelector('.audio-control i');
+                icon.className = soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+                
+                if (soundEnabled) {
+                    oceanSound.play();
+                } else {
+                    oceanSound.pause();
+                }
+            });
             
             // Start animation loop
             animate();
             
             // Initialize scroll animations
             initScrollAnimations();
+            
+            // Hide loading screen when assets are loaded
+            setTimeout(hideLoadingScreen, 2000);
         }
         
-        function latLongToVector3(lat, lon, radius) {
-            const phi = (90 - lat) * Math.PI / 180;
-            const theta = (lon + 180) * Math.PI / 180;
+        function onMouseMove(event) {
+            mouseX = (event.clientX - windowHalfX) * 0.05;
+            mouseY = (event.clientY - windowHalfY) * 0.05;
             
-            return new THREE.Vector3(
-                -radius * Math.sin(phi) * Math.cos(theta),
-                radius * Math.cos(phi),
-                radius * Math.sin(phi) * Math.sin(theta)
-            );
+            // Apply parallax effect to content
+            gsap.to('.hero-content', {
+                x: mouseX * 0.5,
+                y: -mouseY * 0.5,
+                duration: 1,
+                ease: 'power2.out'
+            });
+            
+            // Apply parallax to project cards
+            gsap.to('.project-content', {
+                x: mouseX * 0.3,
+                y: -mouseY * 0.3,
+                duration: 1,
+                ease: 'power2.out'
+            });
         }
         
         function onWindowResize() {
+            windowHalfX = window.innerWidth / 2;
+            windowHalfY = window.innerHeight / 2;
+            
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -755,32 +1104,18 @@
         function animate() {
             requestAnimationFrame(animate);
             
-            // Rotate earth and clouds
-            globe.rotation.y += 0.001;
-            cloud.rotation.y += 0.0015;
-            
-            // Animate marker pulses
-            const time = Date.now() * 0.001;
-            markers.forEach(marker => {
-                marker.pulse.scale.set(1 + Math.sin(time) * 0.3, 1 + Math.sin(time) * 0.3, 1 + Math.sin(time) * 0.3);
-            });
-            
-            // Animate camera based on scroll
-            if (currentTarget) {
-                const targetPosition = currentTarget.position.clone();
-                const cameraTarget = new THREE.Vector3(0, 0, 0);
-                
-                // Move camera closer to target
-                targetPosition.multiplyScalar(1.5);
-                camera.position.lerp(targetPosition, 0.05);
-                
-                // Look at target
-                camera.lookAt(cameraTarget);
-                
-                // Rotate stars slightly
-                stars.rotation.y += 0.0001;
+            // Animate ocean
+            if (ocean) {
+                ocean.rotation.z += 0.001;
             }
             
+            // Slight building rotation based on mouse position
+            if (building) {
+                building.rotation.y = mouseX * 0.0005;
+                building.rotation.x = mouseY * 0.0005;
+            }
+            
+            // Render scene
             renderer.render(scene, camera);
         }
         
@@ -810,17 +1145,40 @@
                 delay: 0.8
             });
             
+            // Initial drone shot animation
+            gsap.to(camera.position, {
+                x: -30,
+                y: 70,
+                z: 80,
+                duration: 4,
+                ease: 'power2.inOut',
+                onUpdate: () => {
+                    camera.lookAt(0, 30, 0);
+                }
+            });
+            
             // Project section animations
-            projects.forEach(project => {
-                const section = document.getElementById(project.id);
+            floors.forEach((floor, index) => {
+                const section = document.getElementById(floor.id);
                 
                 ScrollTrigger.create({
                     trigger: section,
                     start: "top center",
                     end: "bottom center",
                     onEnter: () => {
-                        currentTarget = markers.find(m => m.project.id === project.id).marker;
-                        gsap.to('.path-guide', { opacity: 1, duration: 1 });
+                        currentFloor = index;
+                        
+                        // Animate camera to floor
+                        gsap.to(camera.position, {
+                            x: floor.cameraPos.x,
+                            y: floor.cameraPos.y,
+                            z: floor.cameraPos.z,
+                            duration: 1.5,
+                            ease: 'power2.inOut',
+                            onUpdate: () => {
+                                camera.lookAt(0, floor.y, 0);
+                            }
+                        });
                         
                         // Animate section in
                         gsap.to(section, {
@@ -830,12 +1188,34 @@
                             ease: 'power3.out'
                         });
                     },
-                    onLeave: () => {
-                        gsap.to('.path-guide', { opacity: 0, duration: 0.5 });
-                    },
-                    onEnterBack: () => {
-                        currentTarget = markers.find(m => m.project.id === project.id).marker;
-                        gsap.to('.path-guide', { opacity: 1, duration: 1 });
+                    onLeaveBack: () => {
+                        if (index > 0) {
+                            currentFloor = index - 1;
+                            const prevFloor = floors[index - 1];
+                            
+                            gsap.to(camera.position, {
+                                x: prevFloor.cameraPos.x,
+                                y: prevFloor.cameraPos.y,
+                                z: prevFloor.cameraPos.z,
+                                duration: 1.5,
+                                ease: 'power2.inOut',
+                                onUpdate: () => {
+                                    camera.lookAt(0, prevFloor.y, 0);
+                                }
+                            });
+                        } else {
+                            // Return to initial drone position
+                            gsap.to(camera.position, {
+                                x: -30,
+                                y: 70,
+                                z: 80,
+                                duration: 1.5,
+                                ease: 'power2.inOut',
+                                onUpdate: () => {
+                                    camera.lookAt(0, 30, 0);
+                                }
+                            });
+                        }
                     }
                 });
             });
